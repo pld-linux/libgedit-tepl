@@ -5,34 +5,37 @@
 #
 Summary:	Tepl - Text editor product line
 Summary(pl.UTF-8):	Tepl (Text editor product line) - linia produkcyjna edytorów
-Name:		tepl
-Version:	6.8.0
+Name:		libgedit-tepl
+Version:	6.10.0
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	https://download.gnome.org/sources/tepl/6.8/%{name}-%{version}.tar.xz
-# Source0-md5:	5d29b2c9032a1ba2d33ef9c9c9c7de79
-URL:		https://wiki.gnome.org/Projects/Tepl
+#Source0Download: https://github.com/gedit-technology/libgedit-tepl/releases
+Source0:	https://github.com/gedit-technology/libgedit-tepl/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	0bc684817b93abbcba290094bc94abdb
+URL:		https://gitlab.gnome.org/World/gedit/libgedit-tepl
 BuildRequires:	gettext-tools >= 0.19.6
 BuildRequires:	glib2-devel >= 1:2.74
 BuildRequires:	gobject-introspection-devel >= 1.42.0
-BuildRequires:	gsettings-desktop-schemas-devel
+BuildRequires:	gsettings-desktop-schemas-devel >= 42
 BuildRequires:	gtk+3-devel >= 3.22
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.25}
 BuildRequires:	libgedit-amtk-devel >= 5.8
-BuildRequires:	libgedit-gtksourceview-devel >= 299.0.4
+BuildRequires:	libgedit-gfls-devel
+BuildRequires:	libgedit-gtksourceview-devel >= 299.1.0
+BuildRequires:	libhandy1-devel >= 1.6
 BuildRequires:	libicu-devel
-BuildRequires:	libxml2-devel >= 1:2.5
 BuildRequires:	meson >= 0.64
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.752
-#BuildRequires:	vala
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires:	glib2 >= 1:2.74
 Requires:	gtk+3 >= 3.22
-Requires:	libgedit-gtksourceview >= 299.0.4
-Requires:	libxml2 >= 1:2.5
+Requires:	libgedit-gtksourceview >= 299.1.0
+Obsoletes:	tepl < 6.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -56,13 +59,13 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki Tepl
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.74
-Requires:	gsettings-desktop-schemas-devel
+Requires:	gsettings-desktop-schemas-devel >= 42
 Requires:	gtk+3-devel >= 3.22
 Requires:	libgedit-amtk-devel >= 5.8
-Requires:	libgedit-gtksourceview-devel >= 299.0.4
+Requires:	libgedit-gtksourceview-devel >= 299.1.0
+Requires:	libhandy1-devel >= 1.6
 Requires:	libicu-devel
-Requires:	libxml2-devel >= 1:2.5
-# temporary? no vapi in 2.99.2
+Obsoletes:	tepl-devel < 6.10
 Obsoletes:	vala-tepl < 2.99.2
 
 %description devel
@@ -76,6 +79,7 @@ Summary:	Static Tepl library
 Summary(pl.UTF-8):	Statyczna biblioteka Tepl
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Obsoletes:	tepl-static < 6.10
 
 %description static
 Static Tepl library.
@@ -83,24 +87,11 @@ Static Tepl library.
 %description static -l pl.UTF-8
 Statyczna biblioteka Tepl.
 
-%package -n vala-tepl
-Summary:	Vala API for Tepl library
-Summary(pl.UTF-8):	API języka Vala do biblioteki Tepl
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Requires:	vala
-BuildArch:	noarch
-
-%description -n vala-tepl
-Vala API for Tepl library.
-
-%description -n vala-tepl -l pl.UTF-8
-API języka Vala do biblioteki Tepl.
-
 %package apidocs
 Summary:	API documentation for Tepl library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki Tepl
 Group:		Documentation
+Obsoletes:	tepl-apidocs < 6.10
 BuildArch:	noarch
 
 %description apidocs
@@ -115,7 +106,7 @@ Dokumentacja API biblioteki Tepl.
 %build
 %meson build \
 	%{!?with_static_libs:--default-library=shared} \
-	%{?with_apidocs:-Dgtk_doc=true}
+	%{!?with_apidocs:-Dgtk_doc=false}
 
 %ninja_build -C build
 
@@ -124,7 +115,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %ninja_install -C build
 
-%find_lang tepl-6
+%find_lang libgedit-tepl-6
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -132,34 +123,27 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files -f tepl-6.lang
+%files -f libgedit-tepl-6.lang
 %defattr(644,root,root,755)
 %doc NEWS README.md
-%attr(755,root,root) %{_libdir}/libtepl-6.so.4
+%attr(755,root,root) %{_libdir}/libgedit-tepl-6.so.0
 %{_libdir}/girepository-1.0/Tepl-6.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libtepl-6.so
-%{_includedir}/tepl-6
+%attr(755,root,root) %{_libdir}/libgedit-tepl-6.so
+%{_includedir}/libgedit-tepl-6
 %{_datadir}/gir-1.0/Tepl-6.gir
-%{_pkgconfigdir}/tepl-6.pc
+%{_pkgconfigdir}/libgedit-tepl-6.pc
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libtepl-6.a
-%endif
-
-%if 0
-%files -n vala-tepl
-%defattr(644,root,root,755)
-%{_datadir}/vala/vapi/tepl-6.deps
-%{_datadir}/vala/vapi/tepl-6.vapi
+%{_libdir}/libgedit-tepl-6.a
 %endif
 
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/tepl-6
+%{_gtkdocdir}/libgedit-tepl-6
 %endif
