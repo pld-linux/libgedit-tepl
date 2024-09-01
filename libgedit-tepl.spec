@@ -6,13 +6,13 @@
 Summary:	Tepl - Text editor product line
 Summary(pl.UTF-8):	Tepl (Text editor product line) - linia produkcyjna edytorów
 Name:		libgedit-tepl
-Version:	6.10.0
+Version:	6.11.0
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
-#Source0Download: https://github.com/gedit-technology/libgedit-tepl/releases
-Source0:	https://github.com/gedit-technology/libgedit-tepl/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	0bc684817b93abbcba290094bc94abdb
+# also https://github.com/gedit-technology/libgedit-tepl/releases
+Source0:	https://download.gnome.org/sources/libgedit-tepl/6.11/%{name}-%{version}.tar.xz
+# Source0-md5:	57af3950c8802d7824b3ecc19e10cdcc
 URL:		https://gitlab.gnome.org/World/gedit/libgedit-tepl
 BuildRequires:	gettext-tools >= 0.19.6
 BuildRequires:	glib2-devel >= 1:2.74
@@ -22,7 +22,7 @@ BuildRequires:	gtk+3-devel >= 3.22
 %{?with_apidocs:BuildRequires:	gtk-doc >= 1.25}
 BuildRequires:	libgedit-amtk-devel >= 5.8
 BuildRequires:	libgedit-gfls-devel
-BuildRequires:	libgedit-gtksourceview-devel >= 299.1.0
+BuildRequires:	libgedit-gtksourceview-devel >= 299.3.0
 BuildRequires:	libhandy1-devel >= 1.6
 BuildRequires:	libicu-devel
 BuildRequires:	meson >= 0.64
@@ -34,7 +34,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	glib2 >= 1:2.74
 Requires:	gtk+3 >= 3.22
-Requires:	libgedit-gtksourceview >= 299.1.0
+Requires:	libgedit-gtksourceview >= 299.3.0
 Obsoletes:	tepl < 6.10
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -62,7 +62,7 @@ Requires:	glib2-devel >= 1:2.74
 Requires:	gsettings-desktop-schemas-devel >= 42
 Requires:	gtk+3-devel >= 3.22
 Requires:	libgedit-amtk-devel >= 5.8
-Requires:	libgedit-gtksourceview-devel >= 299.1.0
+Requires:	libgedit-gtksourceview-devel >= 299.3.0
 Requires:	libhandy1-devel >= 1.6
 Requires:	libicu-devel
 Obsoletes:	tepl-devel < 6.10
@@ -126,7 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f libgedit-tepl-6.lang
 %defattr(644,root,root,755)
 %doc NEWS README.md
-%attr(755,root,root) %{_libdir}/libgedit-tepl-6.so.0
+%attr(755,root,root) %{_libdir}/libgedit-tepl-6.so.1
 %{_libdir}/girepository-1.0/Tepl-6.typelib
 
 %files devel
