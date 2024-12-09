@@ -6,13 +6,13 @@
 Summary:	Tepl - Text editor product line
 Summary(pl.UTF-8):	Tepl (Text editor product line) - linia produkcyjna edytorów
 Name:		libgedit-tepl
-Version:	6.11.0
+Version:	6.12.0
 Release:	1
 License:	LGPL v2.1+
 Group:		Libraries
 # also https://github.com/gedit-technology/libgedit-tepl/releases
-Source0:	https://download.gnome.org/sources/libgedit-tepl/6.11/%{name}-%{version}.tar.xz
-# Source0-md5:	57af3950c8802d7824b3ecc19e10cdcc
+Source0:	https://download.gnome.org/sources/libgedit-tepl/6.12/%{name}-%{version}.tar.xz
+# Source0-md5:	332463dcca18b5035ad936aeb09473b2
 URL:		https://gitlab.gnome.org/World/gedit/libgedit-tepl
 BuildRequires:	gettext-tools >= 0.19.6
 BuildRequires:	glib2-devel >= 1:2.74
@@ -126,7 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f libgedit-tepl-6.lang
 %defattr(644,root,root,755)
 %doc NEWS README.md
-%attr(755,root,root) %{_libdir}/libgedit-tepl-6.so.1
+%attr(755,root,root) %{_libdir}/libgedit-tepl-6.so.2
 %{_libdir}/girepository-1.0/Tepl-6.typelib
 
 %files devel
