@@ -7,7 +7,7 @@ Summary:	Tepl - Text editor product line
 Summary(pl.UTF-8):	Tepl (Text editor product line) - linia produkcyjna edytorów
 Name:		libgedit-tepl
 Version:	6.12.0
-Release:	2
+Release:	3
 License:	LGPL v2.1+
 Group:		Libraries
 # also https://github.com/gedit-technology/libgedit-tepl/releases
